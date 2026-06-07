@@ -53,7 +53,7 @@ Asegúrate de inicializar y activar el entorno virtual del proyecto:
 
 
 
-###3. Preparar la Base de Datos (Migraciones)
+### 3. Preparar la Base de Datos (Migraciones)
 
 Crea las tablas correspondientes en el archivo local de SQLite ejecutando las migraciones de Django:
 
@@ -67,7 +67,7 @@ python manage.py migrate
 
 
 
-###4. Crear un Administrador (Opcional)
+### 4. Crear un Administrador (Opcional)
 
 Si deseas acceder al panel de administración nativo de Django para gestionar usuarios, ejecuta:
 ```Bash
@@ -77,7 +77,7 @@ python manage.py createsuperuser
 
 
 
-###5. Iniciar el Servidor de Desarrollo
+### 5. Iniciar el Servidor de Desarrollo
 
 Para correr el programa y empezar a utilizar la aplicación web, ejecuta el comando:
 
@@ -92,32 +92,29 @@ http://localhost:8000/
 ```
 
 
-###Estructura del Proyecto
 
+### Estructura de Modelos (Base de Datos)
 
-Los modelos actuales del proyecto son:
+Representación de las entidades principales del backend y sus responsabilidades:
 
-    Product: Almacena la información de nombre, stock, unidad por la que se vende el producto y el precio por unidad (kilo, libra, etc).
+* **Product**: Almacena nombre, stock, precio y unidad de medida (kilo, libra, etc.).
+* **Customer**: Guarda datos de contacto, fecha de registro y estado crediticio (active).
+* **Sale**: Documento principal que calcula el total general dinámicamente con @property y Sum.
+* **ProductSold**: Detalle intermedio que congela el precio del inventario al vender y calcula subtotales.
 
-    Customer: Almacena la información de contacto, fecha de registro y el interruptor booleano active que define si puede seguir pidiendo fiado.
+---
 
-    Sale: Documento principal de la venta que calcula de forma dinámica el monto total general invocando la propiedad @property def total_price mediante agregaciones (Sum).
+### Arquitectura de Carpetas y Directorios
 
-    ProductSold: Modelo intermedio que extrae el precio oficial del inventario en su método save() y calcula de forma aislada los subtotales de cada artículo.
+Organización física de los archivos del proyecto Django:
 
-Las carpetas actuales del proyecto son:
-
-    apps: Almacena los modulos/apps del proyecto. En estas apps es donde se encuentra la logica backend del proyecto
-          -core: Contiene las views y urls encargados de la pagina de inicio. En si no hay mucho.
-          -inventory: Contiene las views, las urls, models y forms encargados de la gestión del inventario: O sea las funciones para ver, crear, editar y eliminar los productos, los modelos de dichos productos.
-          -sales:Contiene las views, las urls, models y forms encargados de las ventas: El codigo para rgistar alguna compra o fiado, el registro de los clientes, administracion del historial de ventas, etc
-
-    templates: Almacena los archivos .html del proyecto
-
-    doc: Almacena un .word basico que llevo para direccionar el desarrollo del proyecto. 
-
-    config: Almacena la configuración basica que trae por defecto django.
-
+* **apps/**: Contiene los módulos con la lógica de negocio del backend.
+    * **core/**: Gestión de la página de inicio, rutas base y vistas generales.
+    * **inventory/**: CRUD completo de productos (vistas, modelos, formularios y URLs).
+    * **sales/**: Registro de ventas o fiados, gestión de clientes e historial de transacciones.
+* **templates/**: Almacena las plantillas de interfaz de usuario en archivos .html.
+* **doc/**: Resguarda la documentación inicial y la hoja de ruta en formato Word.
+* **config/**: Aloja los archivos de configuración nativos y ajustes globales de Django.
 
 
 
