@@ -105,6 +105,18 @@ Los modelos actuales del proyecto son:
 
     ProductSold: Modelo intermedio que extrae el precio oficial del inventario en su método save() y calcula de forma aislada los subtotales de cada artículo.
 
+Las carpetas actuales del proyecto son:
+
+    apps: Almacena los modulos/apps del proyecto. En estas apps es donde se encuentra la logica backend del proyecto
+          -core: Contiene las views y urls encargados de la pagina de inicio. En si no hay mucho.
+          -inventory: Contiene las views, las urls, models y forms encargados de la gestión del inventario: O sea las funciones para ver, crear, editar y eliminar los productos, los modelos de dichos productos.
+          -sales:Contiene las views, las urls, models y forms encargados de las ventas: El codigo para rgistar alguna compra o fiado, el registro de los clientes, administracion del historial de ventas, etc
+
+    templates: Almacena los archivos .html del proyecto
+
+    doc: Almacena un .word basico que llevo para direccionar el desarrollo del proyecto. 
+
+    config: Almacena la configuración basica que trae por defecto django.
 
 
 
