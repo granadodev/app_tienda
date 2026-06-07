@@ -43,7 +43,7 @@ Sigue estos pasos para clonar el proyecto y ejecutarlo en tu máquina local util
 Abre tu terminal o prompt de Anaconda y ejecuta:
 
 ```bash
-git clone [https://github.com/tu-usuario/app-gestion-tienda.git](https://github.com/tu-usuario/app-gestion-tienda.git)
+git clone [https://github.com/granadodev/app-gestion-tienda.git](https://github.com/granadodev/app-gestion-tienda.git)
 cd app-gestion-tienda
 ```
 
@@ -52,11 +52,6 @@ cd app-gestion-tienda
 ### 2. Activar tu entorno de Anaconda
 Asegúrate de inicializar y activar el entorno virtual del proyecto:
 
-```bash
-#Si usted usa otro entorno de enveiroments acomode el comando
-conda activate proyecto_tienda_eaa
-
-```
 
 
 ###3. Preparar la Base de Datos (Migraciones)
