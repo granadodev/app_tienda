@@ -1,0 +1,44 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+
+
+    <main class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+
+                <form class="card card-body mt-5" action= "{%url 'create_products' %}" method="post">
+
+                    <h1 class="text-center ">Nuevo producto</h1>
+
+                    <p> {{error}} </p>
+
+
+                    {% csrf_token %}
+
+
+        
+                    {{form.as_p}}
+
+
+
+
+                    
+
+                    <button class="btn btn-dark">
+                        Crear
+                    </button>
+
+                </form>
+
+
+            </div>
+        </div>
+
+
+{% endblock %}
+    
+
+
+
+

@@ -1,0 +1,49 @@
+{% extends 'basic.html' %}
+
+
+{% block content %}
+
+    <main class="container">
+        <div class="ro">
+            <div class="col-md-4 offset-md-4">
+
+                <h1 class="text-secundary">{{product.id}}</h1>
+
+                <p> {{error}} </p>
+
+
+                    <form method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button class="btn btn-dark">
+                            Actualizar
+                        </button>
+
+                    </form>                
+
+                <div class="d-flex justify-content-between mt-2">
+
+                    <form action="{% url 'view_inventory'%}" method="get">
+                        {% csrf_token %}
+                        <button class="btn btn-primary">
+                            Cancelar
+                        </button>
+                    </form>
+
+                    <form action="{% url 'delete_product' producto.id %}" method="get">
+                        {% csrf_token %}
+                        <button class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+
+                    
+                </div>
+
+
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}

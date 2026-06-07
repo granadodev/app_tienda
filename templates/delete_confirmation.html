@@ -1,0 +1,45 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+<!-- El min-vh-100 asegura que ocupe todo el alto de la pantalla para centrarlo verticalmente -->
+<main class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="row w-100">
+        <div class="col-md-5 mx-auto">
+            
+            <!-- Esta es la 'cajita' (Card de Bootstrap) -->
+            <div class="card shadow-sm border-0 p-4 bg-light">
+                <div class="card-body text-center">
+                    
+                    <!-- Icono opcional de advertencia para mejorar el diseño visual -->
+                    <div class="text-danger mb-3">
+                        <i class="bi bi-exclamation-triangle fs-1"></i>
+                    </div>
+
+                    <h2 class="card-title fw-bold text-dark mb-3">¿Borrar producto?</h2>
+                    <p class="text-muted mb-4">Esta acción no se puede deshacer. ¿Estás seguro de que deseas eliminar <strong>{{ product.name }}</strong>?</p>
+
+                    <!-- Botones de acción -->
+                    <div class="d-flex justify-content-center gap-3">
+                        
+                        <!-- Botón Cancelar (Redirige con un enlace simple, es más limpio que un form GET) -->
+                        <a href="{% url 'update_product' product.id %}" class="btn btn-secondary px-4">
+                            Cancelar
+                        </a>
+
+                        <!-- Botón Borrar (Formulario POST obligatorio) -->
+                        <form action="{% url 'delete_product' product.id %}" method="post" class="m-0">
+                            {% csrf_token %}
+                            <button class="btn btn-danger px-4">
+                                Borrar
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+<main class="container py-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            
+            <div class="d-flex justify-content-center mb-4">
+                <div class="btn-group btn-group-sm rounded-pill p-1 bg-light border shadow-sm" role="group" style="max-width: 450px; width: 100%;">
+                    
+                    <input type="radio" class="btn-check" name="switchVentas" id="btnTodas" autocomplete="off" 
+                           {% if filtro_actual == 'todos' %}checked{% endif %} 
+                           onclick="navegarFiltro('todos')">
+                    <label class="btn btn-outline-secondary rounded-pill fw-bold border-0 py-1" for="btnTodas">
+                        📋 Todas
+                    </label>
+
+                    <input type="radio" class="btn-check" name="switchVentas" id="btnNormales" autocomplete="off" 
+                           {% if filtro_actual == 'normal' %}checked{% endif %} 
+                           onclick="navegarFiltro('normal')">
+                    <label class="btn btn-outline-success rounded-pill fw-bold border-0 py-1" for="btnNormales">
+                        💵 Ventas
+                    </label>
+
+                    <input type="radio" class="btn-check" name="switchVentas" id="btnFiados" autocomplete="off" 
+                           {% if filtro_actual == 'fiado' %}checked{% endif %} 
+                           onclick="navegarFiltro('fiado')">
+                    <label class="btn btn-outline-warning rounded-pill fw-bold border-0 py-1" for="btnFiados">
+                        📌 Fiados
+                    </label>
+                    
+                </div>
+            </div>
+
+            <h1 class="text-center display-4 mb-4">
+                {% if filtro_actual == 'todos' %}
+                    Historial de Ventas
+                {% elif filtro_actual == 'normal' %}
+                    Ventas en Efectivo
+                {% elif filtro_actual == 'fiado' %}
+                    Cuentas por Cobrar (Fiados)
+                {% endif %}
+            </h1>
+
+            <div class="mb-4">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Buscar por nombre en esta sección..." onkeyup="filtrarPorTexto()">
+                </div>
+            </div>
+
+            <div class="list-group shadow-sm" id="salesList">
+                {% for sale in sales %}
+                    <div class="list-group-item p-4 mb-2 rounded border shadow-sm sale-item">
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                {% if sale.customer %}
+                                    <span class="badge bg-warning text-dark mb-2">📌 FIADO</span>
+                                    <h4 class="fw-bold m-0 text-primary nombre-cliente">{{ sale.customer.name }}</h4>
+                                {% else %}
+                                    <span class="badge bg-success mb-2">💵 VENTA NORMAL</span>
+                                    <h4 class="fw-bold m-0 text-dark nombre-cliente">Consumidor Final</h4>
+                                {% endif %}
+                                
+                                <p class="text-muted small mt-2 mb-0">
+                                    <i class="bi bi-calendar-event"></i> {{ sale.date|date:"d/m/Y - H:i" }}
+                                </p>
+                            </div>
+
+                            <div class="text-end">
+                                <span class="text-muted small d-block">Monto Total</span>
+                                <h2 class="fw-bold text-success m-0">${{ sale.total_price }}</h2>
+                            </div>
+                        </div>
+
+                    </div>
+                {% empty %}
+                    <div class="list-group-item text-center py-5 text-muted">
+                        <h3>No se encontraron registros en esta sección.</h3>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script>
+// JavaScript ahora solo se encarga de redirigir a las URLs correctas del backend
+function navegarFiltro(tipo) {
+    if (tipo === 'todos') {
+        window.location.href = "{% url 'view_sales' %}"; // Tu ruta base o total
+    } else if (tipo === 'normal') {
+        window.location.href = "{% url 'view_sales_normal' %}"; // Asegúrate de nombrar así tus rutas
+    } else if (tipo === 'fiado') {
+        window.location.href = "{% url 'view_sales_fiado' %}";
+    }
+}
+
+// Mantenemos el buscador de texto clásico para buscar instantáneamente sobre la lista cargada
+function filtrarPorTexto() {
+    const textoBuscado = document.getElementById('searchInput').value.toLowerCase();
+    const salesItems = document.querySelectorAll('.sale-item');
+
+    salesItems.forEach(item => {
+        const nombreCliente = item.querySelector('.nombre-cliente').innerText.toLowerCase();
+        if (nombreCliente.includes(textoBuscado)) {
+            item.style.style.display = "";
+        } else {
+            item.style.display = "none";
+        }
+    });
+}
+</script>
+{% endblock %}

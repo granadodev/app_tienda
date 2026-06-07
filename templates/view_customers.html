@@ -1,0 +1,116 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+<main class="container py-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+
+            <div class="d-flex justify-content-center mb-4">
+                <div class="btn-group btn-group-sm rounded-pill p-1 bg-light border shadow-sm" role="group" style="max-width: 320px; width: 100%;">
+                    
+                    <input type="radio" class="btn-check" name="switchClientes" id="btnActivos" autocomplete="off" 
+                           {% if es_activo %}checked{% endif %} 
+                           onclick="filtrarClientes('activos')">
+                    <label class="btn btn-outline-success rounded-pill fw-bold border-0 py-1" for="btnActivos">
+                        🟢 Activos
+                    </label>
+
+                    <input type="radio" class="btn-check" name="switchClientes" id="btnNoFiar" autocomplete="off" 
+                           {% if not es_activo %}checked{% endif %} 
+                           onclick="filtrarClientes('no_fiar')">
+                    <label class="btn btn-outline-danger rounded-pill fw-bold border-0 py-1" for="btnNoFiar">
+                        🔴 No a Fiar
+                    </label>
+                    
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control border-start-0 ps-0" placeholder="Buscar por nombre..." onkeyup="filterList()">
+                </div>
+            </div>
+
+            <h1 class="text-center display-5 py-2">
+                {% if es_activo %}
+                    Clientes Habilitados
+                {% else %}
+                    Clientes Deshabilitados
+                {% endif %}
+            </h1>
+
+            <div class="d-grid mb-4">
+                <a class="btn btn-dark btn-lg shadow-sm" href="{% url 'create_customer' %}">
+                    + Nuevo Cliente
+                </a>
+            </div>
+
+            <div class="list-group shadow-sm">
+            {% for customer in customers %}
+                <a class="list-group-item list-group-item-action p-3" href="{% url 'update_customer' customer.id %}"> 
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h4 class="fw-bold m-0 {% if customer.active %}text-success{% else %}text-danger{% endif %}">
+                            {{ customer.name }}
+                        </h4>
+                        <small class="text-muted bg-light px-2 py-1 rounded border" style="font-size: 0.75rem;">
+                            Unido: {{ customer.date_joined|date:"d/m/Y" }}
+                        </small>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 text-secondary small mb-2">
+                        <span><strong>Tel:</strong> {{ customer.number_phone }}</span>
+                        <span><strong>Correo:</strong> {{ customer.mail }}</span>
+                    </div>
+                    <p class="text-muted m-0 small">
+                        <strong>Dirección:</strong> {{ customer.address }}
+                    </p>
+                </a>
+            {% empty %}
+                <div class="list-group-item text-center text-muted py-4">
+                    No se encontraron clientes en esta sección.
+                </div>
+            {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script>
+    function filtrarClientes(tipo) {
+        if (tipo === 'activos') {
+            window.location.href = "{% url 'view_customers_active' %}";
+        } else {
+            window.location.href = "{% url 'view_customers_deactive' %}";
+        }
+    }
+
+    function filterList() {
+        // 1. Obtener lo que el usuario escribió (en minúsculas)
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase();
+        
+        // 2. Obtener todos los elementos de la lista (los <a> o <div> de tu bucle for)
+        const listItems = document.querySelectorAll('.list-group-item');
+
+        listItems.forEach(item => {
+            // Buscamos el nombre (que está en el h4 o h1 que definimos antes)
+            const nameElement = item.querySelector('h4') || item.querySelector('h1');
+            
+            if (nameElement) {
+                const textValue = nameElement.textContent || nameElement.innerText;
+                
+                // 3. Si el nombre contiene lo escrito, se muestra; si no, se oculta
+                if (textValue.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = ""; // Mostrar
+                } else {
+                    item.style.display = "none"; // Ocultar
+                }
+            }
+        });
+    }
+
+</script>
+{% endblock %}

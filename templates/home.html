@@ -1,0 +1,38 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+<main class="container d-flex align-items-center justify-content-center" style="min-height: 85vh;">
+    <div class="row w-100">
+        <div class="col-md-5 mx-auto text-center">
+
+            <h1 class="display-4 fw-bold text-dark mb-5">App de Tienda</h1>
+
+            <div class="mb-5">
+                <a href="{% url 'register_sale' %}" class="btn btn-success btn-lg py-4 w-100 shadow-sm rounded-4 fs-2 fw-bold">
+                    🛒 Vender
+                </a>
+            </div>
+
+            <h5 class="text-secondary text-uppercase tracking-wider small fw-bold mb-3">Otras opciones</h5>
+
+            <div class="d-flex flex-column gap-3">
+                
+                <a href="{% url 'view_inventory' %}" class="btn btn-outline-dark py-2 rounded-3 fw-semibold">
+                    📦 Ver Inventario
+                </a>
+
+                <a href="{% url 'view_customers' %}" class="btn btn-outline-dark py-2 rounded-3 fw-semibold">
+                    👥 Ver Clientes Registrados
+                </a>
+
+                <a href="{% url 'view_sales' %}" class="btn btn-outline-dark py-2 rounded-3 fw-semibold">
+                    📊 Ver Historial de Ventas
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</main>
+
+{% endblock %}

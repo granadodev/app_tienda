@@ -1,0 +1,62 @@
+{% extends 'basic.html' %}
+
+
+{% block content %}
+
+    <main class="container">
+        <div class="ro">
+            <div class="col-md-4 offset-md-4">
+
+                <h1 class="text-secundary">{{customer.id}}</h1>
+
+                <p> {{error}} </p>
+
+
+                    <form method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button class="btn btn-dark">
+                            Actualizar
+                        </button>
+
+                    </form>                
+
+                <div class="d-flex justify-content-between mt-2">
+
+
+                    {% if customer and customer.0.active %}
+                        <form action="{% url 'view_customers_active'%}" method="get">
+                            {% csrf_token %}
+                            <button class="btn btn-primary">
+                                Cancelar
+                            </button>
+                        </form>
+                            
+                    {% else %}
+
+                        <form action="{% url 'view_customers_deactive'%}" method="get">
+                            {% csrf_token %}
+                            <button class="btn btn-primary">
+                                Cancelar
+                            </button>
+                        </form>
+
+                    {% endif %}
+
+                    <form action="{% url 'delete_customer' customer.id %}" method="get">
+                        {% csrf_token %}
+                        <button class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+
+                    
+                </div>
+
+
+            </div>
+        </div>
+    </main>
+
+
+{% endblock %}
