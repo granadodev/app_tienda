@@ -29,7 +29,6 @@ Una app web sencilla diseñada para la gestion de una tienda pequeña. Permite l
 * **Backend:** Django 5.2 (Python 3.10)
 * **Frontend:** Bootstrap 5, HTML5, JavaScript (ES6)
 * **Base de Datos:** SQLite (Integrada de forma local)
-* **Entorno de Desarrollo:** Anaconda (Conda Environments)
 
 ---
 
