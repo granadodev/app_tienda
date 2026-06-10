@@ -50,7 +50,7 @@
 
             <div class="list-group shadow-sm">
             {% for customer in customers %}
-                <a class="list-group-item list-group-item-action p-3" href="{% url 'update_customer' customer.id %}"> 
+                <a class="list-group-item list-group-item-action p-3" href="{% url 'details_customer' customer.id %}"> 
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <h4 class="fw-bold m-0 {% if customer.active %}text-success{% else %}text-danger{% endif %}">
                             {{ customer.name }}

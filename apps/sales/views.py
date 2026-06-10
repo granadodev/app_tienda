@@ -136,6 +136,8 @@ def delete_customer(request, customer_id):
     return render(request, "delete_customer_confirmation.html", {"product": customer})
 
 
+def details_customer():
+    
 
 
 def view_sales_all(request):
